@@ -37,6 +37,22 @@ final class User
         );
     }
 
+    public static function fromDatabase(
+        UserId $id,
+        UserName $name,
+        UserEmail $email,
+        UserPassword $password,
+        ?UserSurname $surname = null
+    ): self {
+        return new self(
+            $id,
+            $name,
+            $email,
+            $password,
+            $surname
+        );
+    }
+
     public function id(): UserId
     {
         return $this->id;

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Src\Context\User\Application\CreateUser;
 use Src\Context\User\Application\CreateUserDTO;
+use Src\Context\User\Domain\Exceptions\DuplicateEmailException;
 use Throwable;
 
 final class CreateUserController extends Controller
@@ -41,6 +42,10 @@ final class CreateUserController extends Controller
                 'message' => 'Validation failed',
                 'errors'  => $e->errors(),
             ], 422);
+        } catch (DuplicateEmailException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 409);
         } catch (Throwable $e) {
             return response()->json([
                 'message' => 'An error occurred',

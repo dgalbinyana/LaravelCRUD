@@ -34,6 +34,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+        'id' => 'string',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *

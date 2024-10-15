@@ -26,6 +26,11 @@ final class UserId
         return new self((string)Str::uuid());
     }
 
+    public static function fromDatabase(string $uuid): self
+    {
+        return new self($uuid);
+    }
+
     public function value(): string
     {
         return $this->value;

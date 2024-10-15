@@ -10,4 +10,6 @@ interface UserRepository
 {
     public function create(User $user): void;
 
+    public function find(string $field, string $value): ?User;
+
 }
