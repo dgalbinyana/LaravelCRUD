@@ -4,43 +4,62 @@ declare(strict_types = 1);
 
 namespace Src\Context\User\Domain\Entity;
 
+use Src\Context\User\Domain\ValueObjects\UserId;
+use Src\Context\User\Domain\ValueObjects\UserEmail;
+use Src\Context\User\Domain\ValueObjects\UserName;
+use Src\Context\User\Domain\ValueObjects\UserPassword;
+use Src\Context\User\Domain\ValueObjects\UserSurname;
+
 final class User
 {
-    public function __construct(
-        private readonly int $id,
-        private readonly string $name,
-        private readonly string $surname,
-        private readonly string $email
-    ) {
+    private function __construct(
+        private readonly UserId $id,
+        private readonly UserName $name,
+        private readonly UserEmail $email,
+        private readonly UserPassword $password,
+        private readonly ?UserSurname $surname = null
+    )
+    {
     }
 
-    public function id(): int
+    public static function create(
+        UserName $name,
+        UserEmail $email,
+        UserPassword $password,
+        ?UserSurname $surname = null
+    ): self {
+        return new self(
+            UserId::create(),
+            $name,
+            $email,
+            $password,
+            $surname
+        );
+    }
+
+    public function id(): UserId
     {
         return $this->id;
     }
 
-    public function name(): string
+    public function name(): UserName
     {
         return $this->name;
     }
 
-    public function surname(): string
-    {
-        return $this->surname;
-    }
-
-    public function email(): string
+    public function email(): UserEmail
     {
         return $this->email;
     }
 
-    public function toArray(): array
+    public function password(): UserPassword
     {
-        return [
-            'id'      => $this->id,
-            'name'    => $this->name,
-            'surname' => $this->surname,
-            'email'   => $this->email,
-        ];
+        return $this->password;
+    }
+
+    public function surname(): ?UserSurname
+    {
+        return $this->surname;
     }
 }
+

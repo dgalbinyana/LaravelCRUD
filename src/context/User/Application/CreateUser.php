@@ -17,15 +17,17 @@ final class CreateUser
     {
     }
 
-    public function handle(CreateUserDTO $userDTO): User
+    public function handle(CreateUserDTO $userDTO): string
     {
-        $userName     = new UserName($userDTO->name);
-        $userSurname  = new UserSurname($userDTO->surname);
-        $userEmail    = new UserEmail($userDTO->email);
-        $userPassword = new UserPassword($userDTO->password);
+        $user = User::create(
+            new UserName($userDTO->name),
+            new UserEmail($userDTO->email),
+            new UserPassword($userDTO->password),
+            $userDTO->surname ? new UserSurname($userDTO->surname) : null
+        );
 
-        $user = $this->repository->create($userName, $userSurname, $userEmail, $userPassword);
+        $this->repository->create($user);
 
-        return $user;
+        return $user->id()->value();
     }
 }

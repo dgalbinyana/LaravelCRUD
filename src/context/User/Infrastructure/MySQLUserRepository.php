@@ -6,32 +6,19 @@ namespace Src\Context\User\Infrastructure;
 
 use Src\Context\User\Domain\UserRepository;
 use Src\Context\User\Domain\Entity\User;
-use Src\Context\User\Domain\ValueObjects\UserName;
-use Src\Context\User\Domain\ValueObjects\UserSurname;
-use Src\Context\User\Domain\ValueObjects\UserEmail;
-use Src\Context\User\Domain\ValueObjects\UserPassword;
 use App\Models\User as EloquentUser;
 
 final class MySQLUserRepository implements UserRepository
 {
     public function create(
-        UserName $name,
-        UserSurname $surname,
-        UserEmail $email,
-        UserPassword $password
-    ): User {
+        User $user
+    ): void {
         $eloquentUser           = new EloquentUser();
-        $eloquentUser->name     = $name->value();
-        $eloquentUser->surname  = $surname->value();
-        $eloquentUser->email    = $email->value();
-        $eloquentUser->password = bcrypt($password->value());
+        $eloquentUser->id       = $user->id()->value();
+        $eloquentUser->name     = $user->name()->value();
+        $eloquentUser->surname  = $user->surname()?->value();
+        $eloquentUser->email    = $user->email()->value();
+        $eloquentUser->password = bcrypt($user->password()->value());
         $eloquentUser->save();
-
-        return new User(
-            $eloquentUser->id,
-            $name->value(),
-            $surname->value(),
-            $email->value()
-        );
     }
 }

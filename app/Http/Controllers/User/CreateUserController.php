@@ -21,21 +21,21 @@ final class CreateUserController extends Controller
         try {
             $this->validate($request, [
                 'name'     => 'required|string|max:255',
-                'surname'  => 'required|string|max:255',
+                'surname'  => 'nullable|string|max:255',
                 'email'    => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6|max:255',
             ]);
 
-            $createUserDTO = new CreateUserDTO(
-                $request->input('name'),
-                $request->input('surname'),
-                $request->input('email'),
-                $request->input('password')
+            $userId = $this->createUser->handle(
+                new CreateUserDTO(
+                    $request->input('name'),
+                    $request->input('email'),
+                    $request->input('password'),
+                    $request->input('surname')
+                )
             );
 
-            $user = $this->createUser->handle($createUserDTO);
-
-            return response()->json($user->toArray(), 201);
+            return response()->json($userId, 201);
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Validation failed',
