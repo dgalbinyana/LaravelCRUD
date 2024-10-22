@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Src\Context\User\Application;
+namespace Src\Context\User\Application\DTO;
 
 final class CreateUserDTO
 {

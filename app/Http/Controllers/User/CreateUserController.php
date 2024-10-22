@@ -5,11 +5,11 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Src\Context\User\Application\CreateUser;
-use Src\Context\User\Application\CreateUserDTO;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Src\Context\User\Application\DTO\CreateUserDTO;
+use Src\Context\User\Application\Service\CreateUser;
 use Src\Context\User\Domain\Exceptions\DuplicateEmailException;
 use Throwable;
 

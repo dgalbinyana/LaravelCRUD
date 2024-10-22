@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Src\Context\User\Domain\UserRepository;
-use Src\Context\User\Infrastructure\MySQLUserRepository;
+use Src\Context\User\Domain\Repository\UserRepository;
+use Src\Context\User\Infrastructure\Repository\MySQLUserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {

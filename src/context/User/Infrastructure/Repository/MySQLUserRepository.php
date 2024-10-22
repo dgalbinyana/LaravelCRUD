@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Src\Context\User\Infrastructure;
+namespace Src\Context\User\Infrastructure\Repository;
 
-use Src\Context\User\Domain\UserRepository;
-use Src\Context\User\Domain\Entity\User;
 use App\Models\User as EloquentUser;
+use Src\Context\User\Domain\Entity\User;
+use Src\Context\User\Domain\Repository\UserRepository;
 use Src\Context\User\Domain\ValueObjects\UserEmail;
 
 final class MySQLUserRepository implements UserRepository

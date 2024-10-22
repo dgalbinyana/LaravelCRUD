@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Src\Context\User\Domain;
+namespace Src\Context\User\Domain\Repository;
 
 use Src\Context\User\Domain\Entity\User;
 use Src\Context\User\Domain\ValueObjects\UserEmail;
