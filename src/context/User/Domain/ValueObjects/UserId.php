@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 final class UserId
 {
-    private function __construct(private readonly string $value)
+    public function __construct(private readonly string $value)
     {
         $this->ensureIsValidUuid($value);
     }
@@ -24,11 +24,6 @@ final class UserId
     public static function create(): self
     {
         return new self((string)Str::uuid());
-    }
-
-    public static function fromDatabase(string $uuid): self
-    {
-        return new self($uuid);
     }
 
     public function value(): string

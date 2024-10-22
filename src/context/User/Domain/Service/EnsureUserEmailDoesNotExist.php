@@ -6,6 +6,7 @@ namespace Src\Context\User\Domain\Service;
 
 use Src\Context\User\Domain\Exceptions\DuplicateEmailException;
 use Src\Context\User\Domain\UserRepository;
+use Src\Context\User\Domain\ValueObjects\UserEmail;
 
 final class EnsureUserEmailDoesNotExist
 {
@@ -17,11 +18,11 @@ final class EnsureUserEmailDoesNotExist
     /**
      * @throws DuplicateEmailException
      */
-    public function handle(string $email): void
+    public function handle(UserEmail $email): void
     {
-        $user = $this->repository->find('email', $email);
+        $user = $this->repository->findByEmail($email);
 
-        if ($user !== null) {
+        if (null !== $user) {
             throw new DuplicateEmailException;
         }
     }

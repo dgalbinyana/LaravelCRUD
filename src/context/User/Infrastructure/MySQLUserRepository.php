@@ -8,10 +8,6 @@ use Src\Context\User\Domain\UserRepository;
 use Src\Context\User\Domain\Entity\User;
 use App\Models\User as EloquentUser;
 use Src\Context\User\Domain\ValueObjects\UserEmail;
-use Src\Context\User\Domain\ValueObjects\UserId;
-use Src\Context\User\Domain\ValueObjects\UserName;
-use Src\Context\User\Domain\ValueObjects\UserPassword;
-use Src\Context\User\Domain\ValueObjects\UserSurname;
 
 final class MySQLUserRepository implements UserRepository
 {
@@ -27,20 +23,16 @@ final class MySQLUserRepository implements UserRepository
         $eloquentUser->save();
     }
 
-    public function find(string $field, string $value): ?User
+    public function findByEmail(UserEmail $email): ?User
     {
-        $eloquentUser = EloquentUser::where($field, $value)->first();
+        $eloquentUser = EloquentUser::where('email', $email->value())->first();
 
-        if ($eloquentUser === null) {
+        if (null === $eloquentUser) {
             return null;
         }
 
-        return User::fromDatabase(
-            UserId::fromDatabase($eloquentUser->id),
-            new UserName($eloquentUser->name),
-            new UserEmail($eloquentUser->email),
-            new UserPassword($eloquentUser->password),
-            $eloquentUser->surname ? new UserSurname($eloquentUser->surname) : null
+        return User::fromArray(
+            $eloquentUser->toArray()
         );
     }
 }

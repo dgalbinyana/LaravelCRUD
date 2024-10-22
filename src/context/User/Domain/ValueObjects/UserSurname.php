@@ -10,10 +10,12 @@ final class UserSurname
 {
     private const MAX_LENGTH = 255;
 
-    public function __construct(private readonly string $surname)
+    public function __construct(private readonly ?string $surname)
     {
-        $this->ensureIsNotEmpty($surname);
-        $this->ensureMaxLength($surname);
+        if (null !== $this->surname) {
+            $this->ensureIsNotEmpty($surname);
+            $this->ensureMaxLength($surname);
+        }
     }
 
     private function ensureIsNotEmpty(string $surname): void
@@ -30,7 +32,7 @@ final class UserSurname
         }
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->surname;
     }

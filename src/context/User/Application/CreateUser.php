@@ -18,8 +18,7 @@ final class CreateUser
     public function __construct(
         private readonly EnsureUserEmailDoesNotExist $ensureUserEmailDoesNotExist,
         private readonly UserRepository $repository,
-    )
-    {
+    ) {
     }
 
     /**
@@ -27,13 +26,13 @@ final class CreateUser
      */
     public function handle(CreateUserDTO $userDTO): string
     {
-        $this->ensureUserEmailDoesNotExist->handle($userDTO->email);
+        $this->ensureUserEmailDoesNotExist->handle(new UserEmail($userDTO->email));
 
         $user = User::create(
             new UserName($userDTO->name),
             new UserEmail($userDTO->email),
             new UserPassword($userDTO->password),
-            $userDTO->surname ? new UserSurname($userDTO->surname) : null
+            new UserSurname($userDTO->surname)
         );
 
         $this->repository->create($user);

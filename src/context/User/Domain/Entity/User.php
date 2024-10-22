@@ -12,14 +12,13 @@ use Src\Context\User\Domain\ValueObjects\UserSurname;
 
 final class User
 {
-    private function __construct(
+    public function __construct(
         private readonly UserId $id,
         private readonly UserName $name,
         private readonly UserEmail $email,
         private readonly UserPassword $password,
         private readonly ?UserSurname $surname = null
-    )
-    {
+    ) {
     }
 
     public static function create(
@@ -37,19 +36,14 @@ final class User
         );
     }
 
-    public static function fromDatabase(
-        UserId $id,
-        UserName $name,
-        UserEmail $email,
-        UserPassword $password,
-        ?UserSurname $surname = null
-    ): self {
+    public static function fromArray(array $user): self
+    {
         return new self(
-            $id,
-            $name,
-            $email,
-            $password,
-            $surname
+            new UserId($user['id']),
+            new UserName($user['name']),
+            new UserEmail($user['email']),
+            new UserPassword($user['password']),
+            new UserSurname($user['surname'])
         );
     }
 
