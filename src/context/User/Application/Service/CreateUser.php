@@ -25,15 +25,15 @@ final class CreateUser
     /**
      * @throws DuplicateEmailException
      */
-    public function handle(CreateUserDTO $userDTO): string
+    public function handle(CreateUserDTO $DTO): string
     {
-        $this->ensureUserEmailDoesNotExist->handle(new UserEmail($userDTO->email));
+        $this->ensureUserEmailDoesNotExist->handle(new UserEmail($DTO->email));
 
         $user = User::create(
-            new UserName($userDTO->name),
-            new UserEmail($userDTO->email),
-            new UserPassword($userDTO->password),
-            new UserSurname($userDTO->surname)
+            new UserName($DTO->name),
+            new UserEmail($DTO->email),
+            new UserPassword($DTO->password),
+            new UserSurname($DTO->surname)
         );
 
         $this->repository->create($user);

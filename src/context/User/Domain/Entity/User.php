@@ -47,6 +47,16 @@ final class User
         );
     }
 
+    public static function toResponse(array $eloquentUser): array
+    {
+        return [
+            'id'      => $eloquentUser['id'],
+            'name'    => $eloquentUser['name'],
+            'surname' => $eloquentUser['surname'],
+            'email'   => $eloquentUser['email'],
+        ];
+    }
+
     public function id(): UserId
     {
         return $this->id;

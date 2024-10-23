@@ -6,6 +6,7 @@ namespace Src\Context\User\Domain\Repository;
 
 use Src\Context\User\Domain\Entity\User;
 use Src\Context\User\Domain\ValueObjects\UserEmail;
+use Src\Context\User\Domain\ValueObjects\UserId;
 
 interface UserRepository
 {
@@ -13,4 +14,5 @@ interface UserRepository
 
     public function findByEmail(UserEmail $email): ?User;
 
+    public function find(UserId $id): ?array;
 }
