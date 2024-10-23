@@ -17,7 +17,7 @@ final class UserId
     private function ensureIsValidUuid(string $value): void
     {
         if (!Str::isUuid($value)) {
-            throw new InvalidArgumentException("Invalid UUID: $value");
+            throw new InvalidArgumentException("Invalid UUID: $value", 422);
         }
     }
 

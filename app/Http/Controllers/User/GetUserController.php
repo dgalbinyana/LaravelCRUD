@@ -24,12 +24,12 @@ final class GetUserController extends Controller
         } catch (UserNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 404);
+            ], $e->getCode());
         } catch (Throwable $e) {
             return response()->json([
                 'message' => 'An error occurred',
                 'error'   => $e->getMessage(),
-            ], 500);
+            ], $e->getCode());
         }
     }
 }

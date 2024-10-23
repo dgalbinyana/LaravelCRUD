@@ -21,14 +21,14 @@ final class UserSurname
     private function ensureIsNotEmpty(string $surname): void
     {
         if (empty($surname)) {
-            throw new InvalidArgumentException('User surname cannot be empty');
+            throw new InvalidArgumentException('User surname cannot be empty', 400);
         }
     }
 
     private function ensureMaxLength(string $surname): void
     {
         if (strlen($surname) > self::MAX_LENGTH) {
-            throw new InvalidArgumentException('User surname cannot exceed 255 characters');
+            throw new InvalidArgumentException('User surname cannot exceed ' . self::MAX_LENGTH . ' characters', 422);
         }
     }
 

@@ -10,6 +10,6 @@ final class UserNotFoundException extends Exception
 {
     public function __construct(string $id)
     {
-        parent::__construct("User with ID $id not found.");
+        parent::__construct("User with ID $id not found.", 404);
     }
 }
