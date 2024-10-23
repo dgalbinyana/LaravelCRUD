@@ -10,7 +10,7 @@ use Src\Context\User\Domain\Exceptions\UserNotFoundException;
 use Src\Context\User\Domain\Repository\UserRepository;
 use Src\Context\User\Domain\ValueObjects\UserId;
 
-final class ReadUser
+final class FindUser
 {
     public function __construct(private readonly UserRepository $repository)
     {
@@ -19,14 +19,14 @@ final class ReadUser
     /**
      * @throws UserNotFoundException
      */
-    public function handle(ReadUserDTO $DTO): array
+    public function handle(ReadUserDTO $DTO): User
     {
-        $response = $this->repository->find(new UserId($DTO->id));
+        $user = $this->repository->find(new UserId($DTO->id));
 
-        if (null === $response) {
+        if (null === $user) {
             throw new UserNotFoundException($DTO->id);
         }
 
-        return $response;
+        return $user;
     }
 }

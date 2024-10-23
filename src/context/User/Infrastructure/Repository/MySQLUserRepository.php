@@ -37,7 +37,7 @@ final class MySQLUserRepository implements UserRepository
         );
     }
 
-    public function find(UserId $id): ?array
+    public function find(UserId $id): ?User
     {
         $eloquentUser = EloquentUser::where('id', $id->value())->first();
 
@@ -45,7 +45,7 @@ final class MySQLUserRepository implements UserRepository
             return null;
         }
 
-        return User::toResponse(
+        return User::fromArray(
             $eloquentUser->toArray()
         );
     }

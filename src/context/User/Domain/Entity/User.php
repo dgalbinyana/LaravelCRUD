@@ -47,13 +47,13 @@ final class User
         );
     }
 
-    public static function toResponse(array $eloquentUser): array
+    public function toResponse(): array
     {
         return [
-            'id'      => $eloquentUser['id'],
-            'name'    => $eloquentUser['name'],
-            'surname' => $eloquentUser['surname'],
-            'email'   => $eloquentUser['email'],
+            'id'      => $this->id->value(),
+            'name'    => $this->name->value(),
+            'email'   => $this->email->value(),
+            'surname' => $this->surname?->value(),
         ];
     }
 

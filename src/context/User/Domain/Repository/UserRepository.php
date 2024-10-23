@@ -14,5 +14,5 @@ interface UserRepository
 
     public function findByEmail(UserEmail $email): ?User;
 
-    public function find(UserId $id): ?array;
+    public function find(UserId $id): ?User;
 }
