@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Src\Context\User\Application\Service;
 
-use Src\Context\User\Application\DTO\ReadUserDTO;
+use Src\Context\User\Application\DTO\FindUserDTO;
 use Src\Context\User\Domain\Entity\User;
 use Src\Context\User\Domain\Exceptions\UserNotFoundException;
 use Src\Context\User\Domain\Repository\UserRepository;
@@ -19,12 +19,12 @@ final class FindUser
     /**
      * @throws UserNotFoundException
      */
-    public function handle(ReadUserDTO $readUserDTO): User
+    public function handle(FindUserDTO $findUserDTO): User
     {
-        $user = $this->repository->find(new UserId($readUserDTO->id));
+        $user = $this->repository->find(new UserId($findUserDTO->id));
 
         if (null === $user) {
-            throw new UserNotFoundException($readUserDTO->id);
+            throw new UserNotFoundException($findUserDTO->id);
         }
 
         return $user;

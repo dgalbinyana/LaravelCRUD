@@ -6,7 +6,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Src\Context\User\Application\DTO\ReadUserDTO;
+use Src\Context\User\Application\DTO\FindUserDTO;
 use Src\Context\User\Application\Service\FindUser;
 use Src\Context\User\Domain\Exceptions\UserNotFoundException;
 use Throwable;
@@ -18,7 +18,7 @@ final class GetUserController extends Controller
     public function handle(string $id): JsonResponse
     {
         try {
-            $user = $this->findUser->handle(new ReadUserDTO($id));
+            $user = $this->findUser->handle(new FindUserDTO($id));
 
             return response()->json($user->toResponse());
         } catch (UserNotFoundException $e) {
