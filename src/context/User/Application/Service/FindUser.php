@@ -19,12 +19,12 @@ final class FindUser
     /**
      * @throws UserNotFoundException
      */
-    public function handle(ReadUserDTO $DTO): User
+    public function handle(ReadUserDTO $readUserDTO): User
     {
-        $user = $this->repository->find(new UserId($DTO->id));
+        $user = $this->repository->find(new UserId($readUserDTO->id));
 
         if (null === $user) {
-            throw new UserNotFoundException($DTO->id);
+            throw new UserNotFoundException($readUserDTO->id);
         }
 
         return $user;

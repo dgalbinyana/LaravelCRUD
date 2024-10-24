@@ -13,12 +13,12 @@ use Throwable;
 
 final class GetUserController extends Controller
 {
-    public function __construct(private readonly FindUser $readUser) { }
+    public function __construct(private readonly FindUser $findUser) { }
 
     public function handle(string $id): JsonResponse
     {
         try {
-            $user = $this->readUser->handle(new ReadUserDTO($id));
+            $user = $this->findUser->handle(new ReadUserDTO($id));
 
             return response()->json($user->toResponse());
         } catch (UserNotFoundException $e) {
