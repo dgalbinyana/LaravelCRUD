@@ -47,6 +47,16 @@ final class User
         );
     }
 
+    public function toResponse(): array
+    {
+        return [
+            'id'      => $this->id->value(),
+            'name'    => $this->name->value(),
+            'email'   => $this->email->value(),
+            'surname' => $this->surname?->value(),
+        ];
+    }
+
     public function id(): UserId
     {
         return $this->id;
