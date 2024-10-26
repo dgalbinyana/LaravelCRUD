@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Src\Context\User\Application\DTO\CreateUserDTO;
 use Src\Context\User\Application\Service\CreateUser;
 use Src\Context\User\Domain\Exceptions\DuplicateEmailException;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 final class CreateUserController extends Controller
@@ -50,7 +51,7 @@ final class CreateUserController extends Controller
             return response()->json([
                 'message' => 'An error occurred',
                 'error'   => $e->getMessage(),
-            ], $e->getCode());
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

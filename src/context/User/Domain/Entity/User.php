@@ -14,10 +14,10 @@ final class User
 {
     public function __construct(
         private readonly UserId $id,
-        private readonly UserName $name,
-        private readonly UserEmail $email,
-        private readonly UserPassword $password,
-        private readonly ?UserSurname $surname = null
+        private UserName $name,
+        private UserEmail $email,
+        private UserPassword $password,
+        private ?UserSurname $surname = null
     ) {
     }
 
@@ -34,6 +34,18 @@ final class User
             $password,
             $surname
         );
+    }
+
+    public function update(
+        UserName $name,
+        UserEmail $email,
+        UserPassword $password,
+        ?UserSurname $surname = null
+    ): void {
+        $this->name     = $name;
+        $this->email    = $email;
+        $this->password = $password;
+        $this->surname  = $surname;
     }
 
     public static function fromArray(array $user): self
@@ -82,4 +94,3 @@ final class User
         return $this->surname;
     }
 }
-
