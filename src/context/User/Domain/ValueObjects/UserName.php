@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Src\Context\User\Domain\ValueObjects;
 
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class UserName
 {
@@ -19,14 +20,14 @@ final class UserName
     private function ensureIsNotEmpty(string $name): void
     {
         if (empty($name)) {
-            throw new InvalidArgumentException('User name cannot be empty', 400);
+            throw new InvalidArgumentException('User name cannot be empty', Response::HTTP_BAD_REQUEST);
         }
     }
 
     private function ensureMaxLength(string $name): void
     {
         if (strlen($name) > self::MAX_LENGTH) {
-            throw new InvalidArgumentException('User name cannot exceed ' . self::MAX_LENGTH . ' characters', 422);
+            throw new InvalidArgumentException('User name cannot exceed ' . self::MAX_LENGTH . ' characters', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 

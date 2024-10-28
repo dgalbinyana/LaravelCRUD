@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Src\Context\User\Domain\ValueObjects;
 
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class UserPassword
 {
@@ -21,21 +22,21 @@ final class UserPassword
     private function ensureIsNotEmpty(string $password): void
     {
         if (empty($password)) {
-            throw new InvalidArgumentException('Password cannot be empty', 400);
+            throw new InvalidArgumentException('Password cannot be empty', Response::HTTP_BAD_REQUEST);
         }
     }
 
     private function ensureMaxLength(string $password): void
     {
         if (strlen($password) > self::MAX_LENGTH) {
-            throw new InvalidArgumentException('Password cannot exceed ' . self::MAX_LENGTH . ' characters', 422);
+            throw new InvalidArgumentException('Password cannot exceed ' . self::MAX_LENGTH . ' characters', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 
     private function ensureMinLength(string $password): void
     {
         if (strlen($password) < self::MIN_LENGTH) {
-            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long', 422);
+            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 
