@@ -15,4 +15,6 @@ interface UserRepository
     public function findByEmail(UserEmail $email): ?User;
 
     public function find(UserId $id): ?User;
+
+    public function update(User $user): void;
 }

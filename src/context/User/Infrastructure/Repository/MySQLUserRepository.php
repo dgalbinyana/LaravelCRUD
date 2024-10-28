@@ -12,9 +12,8 @@ use Src\Context\User\Domain\ValueObjects\UserId;
 
 final class MySQLUserRepository implements UserRepository
 {
-    public function create(
-        User $user
-    ): void {
+    public function create(User $user): void
+    {
         $eloquentUser           = new EloquentUser();
         $eloquentUser->id       = $user->id()->value();
         $eloquentUser->name     = $user->name()->value();
@@ -26,7 +25,7 @@ final class MySQLUserRepository implements UserRepository
 
     public function findByEmail(UserEmail $email): ?User
     {
-        $eloquentUser = EloquentUser::where('email', $email->value())->first();
+        $eloquentUser = EloquentUser::query()->where('email', $email->value())->first();
 
         if (null === $eloquentUser) {
             return null;
@@ -39,7 +38,7 @@ final class MySQLUserRepository implements UserRepository
 
     public function find(UserId $id): ?User
     {
-        $eloquentUser = EloquentUser::where('id', $id->value())->first();
+        $eloquentUser = EloquentUser::query()->where('id', $id->value())->first();
 
         if (null === $eloquentUser) {
             return null;
@@ -48,5 +47,17 @@ final class MySQLUserRepository implements UserRepository
         return User::fromArray(
             $eloquentUser->toArray()
         );
+    }
+
+    public function update(User $user): void
+    {
+        EloquentUser::query()
+                    ->where('id', $user->id()->value())
+                    ->update([
+                        'name'     => $user->name()->value(),
+                        'email'    => $user->email()->value(),
+                        'password' => $user->password()->value(),
+                        'surname'  => $user->surname()->value(),
+                    ]);
     }
 }

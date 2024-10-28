@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Src\Context\User\Application\DTO\FindUserDTO;
 use Src\Context\User\Application\Service\FindUser;
 use Src\Context\User\Domain\Exceptions\UserNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 final class GetUserController extends Controller
@@ -29,7 +30,7 @@ final class GetUserController extends Controller
             return response()->json([
                 'message' => 'An error occurred',
                 'error'   => $e->getMessage(),
-            ], $e->getCode());
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
