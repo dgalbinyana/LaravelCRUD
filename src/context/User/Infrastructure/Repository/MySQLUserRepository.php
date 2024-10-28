@@ -60,4 +60,12 @@ final class MySQLUserRepository implements UserRepository
                         'surname'  => $user->surname()->value(),
                     ]);
     }
+
+
+    public function delete(UserId $id): void
+    {
+        EloquentUser::query()
+                    ->where('id', $id->value())
+                    ->delete();
+    }
 }
