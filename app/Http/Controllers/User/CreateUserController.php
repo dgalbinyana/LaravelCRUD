@@ -41,16 +41,16 @@ final class CreateUserController extends Controller
             return response()->json([
                 'message' => 'Validation failed',
                 'errors'  => $e->errors(),
-            ], 422);
+            ], $e->status);
         } catch (DuplicateEmailException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 409);
+            ], $e->getCode());
         } catch (Throwable $e) {
             return response()->json([
                 'message' => 'An error occurred',
                 'error'   => $e->getMessage(),
-            ], 500);
+            ], $e->getCode());
         }
     }
 }

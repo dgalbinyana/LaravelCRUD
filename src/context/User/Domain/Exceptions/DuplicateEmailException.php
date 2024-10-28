@@ -10,6 +10,6 @@ final class DuplicateEmailException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("This email is already registered.");
+        parent::__construct("This email is already registered.", 409);
     }
 }

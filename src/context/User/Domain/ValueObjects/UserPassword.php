@@ -21,21 +21,21 @@ final class UserPassword
     private function ensureIsNotEmpty(string $password): void
     {
         if (empty($password)) {
-            throw new InvalidArgumentException('Password cannot be empty');
+            throw new InvalidArgumentException('Password cannot be empty', 400);
         }
     }
 
     private function ensureMaxLength(string $password): void
     {
         if (strlen($password) > self::MAX_LENGTH) {
-            throw new InvalidArgumentException('Password cannot exceed 255 characters');
+            throw new InvalidArgumentException('Password cannot exceed ' . self::MAX_LENGTH . ' characters', 422);
         }
     }
 
     private function ensureMinLength(string $password): void
     {
         if (strlen($password) < self::MIN_LENGTH) {
-            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long');
+            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long', 422);
         }
     }
 
