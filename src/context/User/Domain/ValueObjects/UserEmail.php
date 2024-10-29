@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Src\Context\User\Domain\ValueObjects;
 
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class UserEmail
 {
@@ -12,7 +13,7 @@ final class UserEmail
     public function __construct(string $email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException("Invalid email format", 422);
+            throw new InvalidArgumentException("Invalid email format", Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $this->email = $email;
     }

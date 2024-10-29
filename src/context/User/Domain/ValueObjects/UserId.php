@@ -6,6 +6,7 @@ namespace Src\Context\User\Domain\ValueObjects;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class UserId
 {
@@ -17,7 +18,7 @@ final class UserId
     private function ensureIsValidUuid(string $value): void
     {
         if (!Str::isUuid($value)) {
-            throw new InvalidArgumentException("Invalid UUID: $value", 422);
+            throw new InvalidArgumentException("Invalid UUID: $value", Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 
