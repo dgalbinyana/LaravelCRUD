@@ -17,4 +17,6 @@ interface UserRepository
     public function find(UserId $id): ?User;
 
     public function update(User $user): void;
+
+    public function delete(UserId $id): void;
 }
