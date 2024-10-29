@@ -5,43 +5,29 @@ declare(strict_types = 1);
 namespace Src\Context\User\Domain\ValueObjects;
 
 use InvalidArgumentException;
+use Src\Context\Shared\Domain\ValueObjects\StringValueObject;
 use Symfony\Component\HttpFoundation\Response;
 
-final class UserPassword
+final class UserPassword extends StringValueObject
 {
     private const MAX_LENGTH = 255;
     private const MIN_LENGTH = 6;
+    private const FIELD_NAME = "Password";
 
-    public function __construct(private readonly string $password)
+    public function __construct(string $password)
     {
-        $this->ensureIsNotEmpty($password);
-        $this->ensureMaxLength($password);
+        $this->ensureIsNotEmpty($password, self::FIELD_NAME);
+        $this->ensureMaxLength($password, self::FIELD_NAME, self::MAX_LENGTH);
         $this->ensureMinLength($password);
-    }
 
-    private function ensureIsNotEmpty(string $password): void
-    {
-        if (empty($password)) {
-            throw new InvalidArgumentException('Password cannot be empty', Response::HTTP_BAD_REQUEST);
-        }
-    }
-
-    private function ensureMaxLength(string $password): void
-    {
-        if (strlen($password) > self::MAX_LENGTH) {
-            throw new InvalidArgumentException('Password cannot exceed ' . self::MAX_LENGTH . ' characters', Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        parent::__construct($password);
     }
 
     private function ensureMinLength(string $password): void
     {
         if (strlen($password) < self::MIN_LENGTH) {
-            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long', Response::HTTP_UNPROCESSABLE_ENTITY);
+            throw new InvalidArgumentException('Password must be at least ' . self::MIN_LENGTH . ' characters long',
+                Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-    }
-
-    public function value(): string
-    {
-        return $this->password;
     }
 }

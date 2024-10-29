@@ -22,7 +22,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Src\\Context\\User\\": "src/context/User/"
+            "Src\\Context\\User\\": "src/context/User/",
+            "Src\\Context\\Shared\\": "src/context/Shared/"
         }
     },
     "autoload-dev": {
