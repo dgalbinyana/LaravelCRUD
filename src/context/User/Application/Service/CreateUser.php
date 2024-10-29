@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Src\Context\User\Application\Service;
 
+use App\Events\User\UserCreated;
 use Src\Context\User\Application\DTO\CreateUserDTO;
 use Src\Context\User\Domain\Entity\User;
 use Src\Context\User\Domain\Exceptions\DuplicateEmailException;
@@ -37,6 +38,8 @@ final class CreateUser
         );
 
         $this->repository->create($user);
+
+        event(new UserCreated($user));
 
         return $user->id()->value();
     }
