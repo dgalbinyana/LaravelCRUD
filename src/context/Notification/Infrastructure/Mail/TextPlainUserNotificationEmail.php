@@ -2,19 +2,25 @@
 
 declare(strict_types = 1);
 
-namespace Src\Context\User\Application\Service;
+namespace Src\Context\Notification\Infrastructure\Mail;
 
-use Src\Context\User\Domain\Entity\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
+use Src\Context\Notification\Domain\Mail\UserNotificationEmail;
+use Src\Context\User\Domain\Entity\User;
 
-final class WelcomeEmail extends Mailable
+final class TextPlainUserNotificationEmail extends Mailable implements UserNotificationEmail
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private readonly User $user)
+    private User $user;
+
+    public function sendWelcomeEmail(User $user): void
     {
+        $this->user = $user;
+        Mail::to($this->user->email()->value())->send($this->build());
     }
 
     public function build():self
