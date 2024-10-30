@@ -13,10 +13,10 @@ final class SendWelcomeEmailOnUserRegistration implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    public function __construct(private readonly UserNotificationEmail $welcomeEmail) { }
+    public function __construct(private readonly UserNotificationEmail $userNotificationEmail) { }
 
     public function handle(UserCreated $event): void
     {
-        $this->welcomeEmail->sendWelcomeEmail($event->user());
+        $this->userNotificationEmail->sendWelcomeEmail($event->user());
     }
 }
