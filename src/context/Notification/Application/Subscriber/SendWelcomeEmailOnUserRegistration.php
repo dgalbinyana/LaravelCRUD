@@ -6,6 +6,7 @@ namespace Src\Context\Notification\Application\Subscriber;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Src\Context\Notification\Application\DTO\SendWelcomeEmailDTO;
 use Src\Context\Notification\Application\Service\SendWelcomeEmail;
 use Src\Context\User\Domain\Event\UserCreated;
 
@@ -17,6 +18,6 @@ final class SendWelcomeEmailOnUserRegistration implements ShouldQueue
 
     public function handle(UserCreated $event): void
     {
-        $this->sendWelcomeEmail->handle($event->user());
+        $this->sendWelcomeEmail->handle(new SendWelcomeEmailDTO($event->user()));
     }
 }
