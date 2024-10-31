@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\Context\Notification\Domain\Mail;
+namespace Src\Context\Notification\Domain\Repository;
 
 use Src\Context\User\Domain\Entity\User;
 
-interface UserNotificationEmail
+interface MailerRepository
 {
     public function sendWelcomeEmail(User $user): void;
 }

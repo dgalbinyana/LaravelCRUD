@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Src\Context\Notification\Application\Subscriber\SendWelcomeEmailOnUserRegistration;
-use Src\Context\Notification\Domain\Mail\UserNotificationEmail;
-use Src\Context\Notification\Infrastructure\Mail\TextPlainUserNotificationEmail;
+use Src\Context\Notification\Domain\Repository\MailerRepository;
+use Src\Context\Notification\Infrastructure\Service\LaravelMailer;
 use Src\Context\User\Domain\Event\UserCreated;
 use Src\Context\User\Domain\Repository\UserRepository;
 use Src\Context\User\Infrastructure\Repository\MySQLUserRepository;
@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(UserRepository::class, MYSQLUserRepository::class);
-        $this->app->bind(UserNotificationEmail::class, TextPlainUserNotificationEmail::class);
+        $this->app->bind(MailerRepository::class, LaravelMailer::class);
     }
 
     /**
