@@ -6,9 +6,11 @@ namespace Src\Context\Notification\Application\Subscriber;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 use Src\Context\Notification\Application\DTO\SendWelcomeEmailDTO;
 use Src\Context\Notification\Application\Service\SendWelcomeEmail;
 use Src\Context\User\Domain\Event\UserCreated;
+use Src\Context\User\Domain\Exceptions\UserNotFoundException;
 
 final class SendWelcomeEmailOnUserRegistration implements ShouldQueue
 {
@@ -18,6 +20,13 @@ final class SendWelcomeEmailOnUserRegistration implements ShouldQueue
 
     public function handle(UserCreated $event): void
     {
-        $this->sendWelcomeEmail->handle(new SendWelcomeEmailDTO($event->user()));
+        try {
+            $this->sendWelcomeEmail->handle(new SendWelcomeEmailDTO($event->userId()));
+        } catch (UserNotFoundException $e) {
+            Log::info('User not found for sending welcome email', [
+                'userId'           => $event->userId(),
+                'exceptionMessage' => $e->getMessage()
+            ]);
+        }
     }
 }

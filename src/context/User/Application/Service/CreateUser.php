@@ -40,7 +40,7 @@ final class CreateUser
 
         $this->repository->create($user);
 
-        event(new UserCreated($user));
+        event(new UserCreated($user->id()->value()));
 
         return $user->id()->value();
     }
