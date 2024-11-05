@@ -21,10 +21,10 @@ final class SendWelcomeEmailOnUserRegistration implements ShouldQueue
     public function handle(UserCreated $event): void
     {
         try {
-            $this->sendWelcomeEmail->handle(new SendWelcomeEmailDTO($event->userId()));
+            $this->sendWelcomeEmail->handle(new SendWelcomeEmailDTO($event->userId));
         } catch (UserNotFoundException $e) {
             Log::info('User not found for sending welcome email', [
-                'userId'           => $event->userId(),
+                'userId'           => $event->userId,
                 'exceptionMessage' => $e->getMessage()
             ]);
         }

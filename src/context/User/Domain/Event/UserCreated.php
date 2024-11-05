@@ -11,12 +11,7 @@ final class UserCreated
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(private readonly string $userId)
+    public function __construct(public readonly string $userId)
     {
-    }
-
-    public function userId(): string
-    {
-        return $this->userId;
     }
 }
