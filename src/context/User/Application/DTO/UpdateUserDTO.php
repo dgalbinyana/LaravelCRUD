@@ -9,8 +9,8 @@ final class UpdateUserDTO
     public function __construct(
         public string $id,
         public string $name,
+        public string $actualPassword,
         public ?string $email = null,
-        public ?string $actualPassword = null,
         public ?string $newPassword = null,
         public ?string $surname = null
     ) {

@@ -35,8 +35,8 @@ final class UpdateUserController extends Controller
                 new UpdateUserDTO(
                     $id,
                     $request->input('name'),
-                    $request->input('email'),
                     $request->input('actual_password'),
+                    $request->input('email'),
                     $request->input('new_password'),
                     $request->input('surname'),
                 )
