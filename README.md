@@ -1,66 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Laravel CRUD (Hexagonal, SOLID, DDD)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Descripción
+Este proyecto implementa una API RESTful en Laravel para la gestión de usuarios, aplicando arquitectura hexagonal, principios SOLID y DDD. Este CRUD permite realizar operaciones básicas de creación, lectura, actualización y eliminación de usuarios, además de incluir eventos como el envío de un email de bienvenida.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Requisitos
+- Laravel 11
+- PHP >= 8.1
+- Configuración de servidor de correo para pruebas de envío de correos de bienvenida
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Instalación
+1. Clona este repositorio en tu máquina.
+2. Ejecuta `composer install` para instalar las dependencias.
+3. Configura el archivo `.env` con los detalles de conexión a la base de datos.
+4. Ejecuta las migraciones con:
+   ```bash
+   php artisan migrate
+   
+###
+### Rutas del CRUD de Usuarios
+###
+#### 1. Crear usuario
+- **URL**: `POST /users`
+- **Descripción**: Crea un nuevo usuario en el sistema. Devuelve el ID del nuevo usuario.
+- **Campos requeridos**:
+    - `name` (max: 255)
+    - `email` (único en la base de datos)
+    - `password` (min: 6, max: 255)
+- **Campos opcionales**:
+    - `surname` (max: 255)
+- **Ejemplo de petición**:
+   ```json
+   {
+       "name": "John",
+       "surname": "Doe",
+       "email": "john.doe@example.com",
+       "password": "securepassword"
+   }
+  
+###
+#### 2. Obtener usuario
+- **URL**: `GET /users/{id}`
+- **Descripción**: Obtiene los datos de un usuario específico mediante su ID.
+- **Parámetros**:
+    - `{id}` (UUID del usuario)
+- **Ejemplo de petición**:
+   ```plaintext
+   GET /users/2ded9875-c7d2-4fe5-bed2-64870da99290
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+###
+#### 3. Actualizar usuario
+- **URL**: `PUT /users/{id}`
+- **Descripción**: Actualiza la información de un usuario existente. Devuelve el `id`, `name`, `email`, y `surname`.
+- **Campos requeridos**:
+    - `name` (max: 255)
+    - `actual_password`
+- **Campos opcionales**:
+    - `surname` (max: 255)
+    - `email` (único en la base de datos excepto para el usuario actual)
+    - `new_password` (min: 6, max: 255, requerido solo si `new_password_confirmation` está presente)
+    - `new_password_confirmation` (min: 6, max: 255, se requiere si `new_password` está presente)
+- **Ejemplo de petición**:
+   ```plaintext
+   PUT /users/2ded9875-c7d2-4fe5-bed2-64870da99290
+   ```
+   ```json
+    {
+        "name": "John Updated",
+        "surname": "Doe",
+        "email": "john.updated@example.com",
+        "actual_password": "oldpassword",
+        "new_password": "newsecurepassword",
+        "new_password_confirmation": "newsecurepassword"
+    }
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+###
+#### 4. Eliminar usuario
+- **URL**: `DELETE /users/{id}`
+- **Descripción**: Elimina un usuario específico del sistema.
+- **Parámetros**:
+    - `{id}` (UUID del usuario)
+- **Ejemplo de petición**:
+   ```plaintext
+   DELETE /users/2ded9875-c7d2-4fe5-bed2-64870da99290
